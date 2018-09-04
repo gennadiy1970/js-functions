@@ -1,0 +1,119 @@
+let a = 100;
+let b = 200;
+let sum = a + b;
+console.log(sum);
+
+
+a = 200;
+b = 300;
+sum = a + b;
+console.log(sum);
+
+Код повторяеется! 
+DRY
+======================
+Вынесем вычисление в блок
+name (a, b) { return a + b}
+
+function add(x, y) {
+  return x + y;
+}
+
+
+console.log(add(200, 100));
+console.log(add(300, 100));
+console.log(add(400, 100));
+console.log(add(500, 100));
+console.log(add(600, 100));
+
+=========================
+Функция как аргумент
+function divide(x, y) {
+  return x / y;
+}
+function add(x, y) {
+  return x + y;
+}
+
+function print(arr, foo) {
+  for (let i = 0; i < arr.length; i += 1) {
+    console.log(foo(arr[i][0], arr[i][1]));
+  }
+}
+
+const array = [[200, 100], [300, 100], [400, 100], [500, 100], [600, 100]];
+print(array, add);
+print(array, divide);
+
+=============================
+const calc = ['+', '-', '*', '/', '%', '**'];
+
+function createCalcFoo(arr) {
+    const res = [];
+    for (let i = 0; i < arr.length; i += 1) {
+       res.push(new Function("a", "b", `return a  ${arr[i]} b;`))
+    }
+    return res;
+}
+
+function print(arr, fn) {
+  for (let i = 0; i < arr.length; i += 1) {
+    for (let j = 0; j < fn.length; j += 1) {
+      console.log(createCalcFoo(calc)[j](arr[i][0], arr[i][1]));
+    }
+  }
+}
+
+const array = [[200, 100], [300, 100], [400, 100], [500, 100], [600, 100]];
+
+print(array, foo);
+
+
+==========================
+Функция как значение массива
+const foo = [
+  function(a, b) {
+    return a + b;
+  },
+  function(a, b) {
+    return a * b;
+  },
+  function(a, b) {
+    return a - b;
+  },
+  function(a, b) {
+    return a / b;
+  },
+  function(a, b) {
+    return a ** b;
+  },
+  function(a, b) {
+    return a % b;
+  }
+];
+
+function print(arr, fn) {
+  for (let i = 0; i < arr.length; i += 1) {
+    for (let j = 0; j < fn.length; j += 1) {
+      console.log(fn[j](arr[i][0], arr[i][1]));
+    }
+  }
+}
+
+const array = [[200, 100], [300, 100], [400, 100], [500, 100], [600, 100]];
+print(array, foo);
+
+
+=======================
+function add(x, y) {
+  return x / y;
+}
+
+
+console.log(add(200, 100));
+console.log(add(300, 100));
+console.log(add(400, 100));
+console.log(add(500, 100));
+console.log(add(600, 100));
+
+Порядок имеет значение

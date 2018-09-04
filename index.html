@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Function</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54="
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <h2>Function</h2>
+        <p><i>Блок кода для вызова<br> из любого места программы</i></p>
+    </div>
+    <div class="wrapper">
+        <section>
+            <article>
+                <p>Функцию нужно определить, а затем вызывать.</p>
+                <h4>Синтаксис определения функции</h4>
+                <p>Существует 3 основных синтаксиса:</p>
+                <ul>
+                    <li><i>Function Declaration</i></li>
+                    <li><i>Function Expression</i></li>
+                    <li><i>Arrow Function <i class="comment">изучим позже</i> </i></li>
+                </ul>
+
+                <p><b>Function declaration</b></p>
+                <ul>
+                    <li>Служебное слово <b>function</b></li>
+                    <li>Имя <b>name</b> - глагол</li>
+                    <li>Объявление локальных переменных блока <i>(parametrs)</i></li>
+                    <li><i>Блок</i></li>
+                    <li>Точка с запятой не обязательна</li>
+                </ul>
+                <pre><code>
+<span class="comment">c параметрами</span>
+function add (a, b) {
+    return a + b; 
+}
+
+<span class="comment">без параметров</span>
+function hello () {
+    console.log('Hello') 
+}
+
+                </code></pre>
+                <p>Не стандартизованное свойство <b>name</b></p>
+                <details>
+                    <pre> <code>
+function add (a, b) {
+    return a + b; 
+}
+
+add.name <span class="comment">add</span>                        
+                    </code></pre>
+                </details>
+                <!-- <p>Анонимные функции</p> -->
+                <p><b>Function expression</b></p>
+                <p>Точка с запятой обязательна</p>
+                <p>Это функция, которая присваивается переменной. Синтаксис бывает 2-х видов - с именем функции и без имени.</p>
+                <p>Собственное имя не обязательно - его нельзя использовать нигде, кроме как в теле функции для рекусии</p>
+                <details>
+                    <pre> <code>
+let sum = 0;
+const add = 
+  function adding(n) {
+  sum += n;
+  if(n &gt;= 1) adding(n-1);
+}
+add(5); <span class="comment">15</span>                          
+                    </code></pre>
+                </details>
+                <p><b>Именованная</b> функция­-выражение</p>
+                <pre><code>
+const add = 
+ function add (a, b) {
+        return a + b; 
+ };                    
+                </code></pre>
+                <p><b>Анонимная</b> функция­-выражение</p>
+                <pre><code>
+const add = 
+ function (a, b) {
+        return a + b; 
+ };                    
+                </code></pre>
+
+            </article>
+            <article>
+                <h4>Синтаксис вызова функции</h4>
+                <p>Функция вызывается 4 разными способами: </p>
+                <ul>
+                    <li>как функция</li>
+                    <li>как метод <i class="comment">изучим позже</i> </li>
+                    <li>как конструктор <i class="comment">изучим позже</i></li>
+                    <li>комбинация - вызвать метод как функцию и наоборот<i class="comment">изучим позже</i></li>
+                </ul>
+                <p>Вызов функции состоит из имени функции и обязательных круглых скобок с перечислением <i>аргументов</i>
+                    ().</p>
+                <pre><code>
+add(2, 3) <span class="comment">5</span>                    
+hello() <span class="comment">hello</span>                    
+                </code></pre>
+                <h4>Аргументы</h4>
+                <p>Количество аргументов может отличаться от количества параметров - это не вызовет ошибки.</p>
+                <p>Если параметр объявлен в теле функции, а при вызове аргумент не присвоен, то локальной переменной будет
+                    присвоен <b>undefined</b></p>
+                <p>Если <i>undefined</i> не желателен, то стоит задать <i>значения по умолчанию.</i></p>
+
+                <h4>Значения по умолчанию для параметров.</h4>
+                <p><b>Old school</b> : </p>
+                <pre><code>
+function add (a, b) {
+    let x = a || 2;
+    let y = b || 3;
+    return x + y; 
+};  
+add();  <span class="comment">5</span>
+                </code></pre>
+                <p><b>ES5</b> : </p>
+                <pre><code>
+function add (a = 2, b = 3) {
+    return a + b; 
+};  
+add();  <span class="comment">5</span>
+                </code></pre>
+            </article>
+            <article>
+                <h4>Псевдомассив arguments</h4>
+                <p>Порядок объявления аргументов имеет значение:</p>
+                <pre> <code>
+function diving (a, b) {
+  return a / b
+}
+ diving (4, 2)<span class="comment">2</span>
+ diving (2, 4)<span class="comment">.5</span>                    
+                </code></pre>
+                <p>Как достигается гарантия порядка? С помощью <b>псевдомассива arguments</b></p>
+                <p>В каждой функции при вызове создается <i>псевдомассив</i> с именем <i>arguments</i>. Этот псевдомассив
+                    доступен для чтения.</p>
+                <pre><code>
+function getLastArg () {
+  let max = 
+    arguments.length - 1;
+  return arguments[max];
+}
+getLastArg(1, 5, "last") 
+<span class="comment">"last"</span>               
+            </code></pre>
+                <p> Его можно использовать. Например получим функцию, суммирующую любое количество аргументов:</p>
+                <pre><code>
+function summator () {
+  let sum = 0;
+  let max = 
+    arguments.length;
+  for (
+        let i = 0; 
+        i &lt; max; 
+        i += 1
+      ) {
+    sum += arguments[i]
+  }
+  return sum;
+}
+summator(1, 2, 3, 4, 5)    
+<span class="comment">15</span>             
+            </code></pre>
+            </article>
+        </section>
+        <section>
+            <h4>Подъем функций</h4>
+            <p>FD vs FE</p>
+            <p>Особенностью <i>Function Declaration</i> является то, что такую функцию можно <b>вызывать до объявления</b>
+                </p>
+            <p>Выполнение кода JS происходит в два этапа. На первом этапе компилятор исследует код и собирает объявление
+                функция (FD) и объявленные переменные. На втором этапе происходит вызов функций и вычисление/присвоение переменных.
+                Таким образом переменные оказываются вверху области видимости со значеним <b>undefined</b>. Функции FE присвоены
+                переменным, но в начале кода этим переменным пока не присвоена функция. FE не могут выполняться. А функций
+                FD уже готовы к выполнению фактически до объявления.
+            </p>
+            <details>
+                <pre> <code>
+var foo = 1; 
+
+function bar() { 
+  <span class="comment">var foo; // undefined</span> 
+  if (!foo) {<span class="comment"> // true</span>
+    var foo = 10; 
+  } 
+    return foo;
+} 
+bar();<span class="comment"> //10 true</span>                    
+                </code></pre>
+            </details>
+            <img src="./img/0.svg" alt="code" width="320">
+            <img src="./img/1.svg" alt="first circle" width="320">
+            <img src="./img/2.svg" alt="seconde circle" width="320">
+            <article>
+                <h4>Возврат значения</h4>
+                <p><b>void</b> vs <b>return</b></p>
+                <p> <b>void</b> - функция, которая не возвращает результат, а изменяет что-либо вне функции. 
+                    Служебное слово <b>void</b> зарезервировано, но не используется. Достаточно не использовать <i>return</i></p>
+                    <pre><code>
+let a;
+
+function set(num) {
+    a = [num];
+}
+
+set(10);
+Array.isArray(a) <span class="comment">true</span>
+a[0] <span class="comment">10</span> 
+                    </code></pre>
+                <p> <b>return</b> - функция, которая возвращает результат в место вызова. Использует служебное слово <b>return</b> </p>
+                    <pre><code>
+let a;
+
+function set(num) {
+    return [num]
+}
+    
+a = set(10);
+Array.isArray(a) <span class="comment">true</span>
+a[0] <span class="comment">10</span>                      
+                    </code></pre>
+                    <p><b>Чистые функции</b></p>
+                <ul>
+                    <li><i>не имеют побочных эффектов</i> т.е. функции, которые не изменяют состояие глобального объекта например</li>
+                    <li><i>детерминированы</i> при одинаковых аргументах всегда вернут одинаковый результат</li>
+                </ul>
+                <p>Если есть выбор - используйте чистые функции. Их легко тестировать и можно переиспользовать не рискуя побочными эффектами.</p>
+                <p>Создать программу из одних чистых функций невозможно - как минимум требуется вывести результат. Но стремиться к этому надо :-)</p>
+    
+            </article>
+            <article>
+                <h4>Две главные особенности функций</h4>
+                <p>Функции – это ссылочный тип</p>
+                <details>
+                    <ul>
+                        <li>Функции могут создаваться динамически 
+                            <pre><code>
+const sum = 
+    new Function(
+        'a', 
+        'b', 
+        'return a + b'
+    );
+sum(2, 3) <span class="comment">5</span>
+
+                            </code></pre>
+                        </li>
+                        <li>Функции могут присваиваться переменным</li>
+                        <pre><code>
+const arr = [
+ function (a, b) {
+     return a + b;
+ },
+ function (a, b) {
+    return a * b;
+ }
+];             4
+
+const sum = arr[0]
+const mult = arr[1]
+
+sum(2, 3)  <span class="comment">5</span>
+mult(2, 3)  <span class="comment">6</span>
+                        </code></pre>
+                        <li>Функции могут передаваться как аргументы другим функциям 
+                            <pre><code>
+function doIt(fn, a, b){
+  return fn(a, b)
+}
+
+function sum(a, b) {
+  return a + b;
+}
+
+doIt(sum, 2, 3) <span class="comment">5</span>
+
+
+                            </code></pre>
+                            и могут возвращаться другими функциями 
+                            <pre><code>
+function calc(sign) {
+  return new Function(
+    'a', 
+    'b', 
+    `return a ${sign} b`
+    )
+}
+
+let sum = calc("+")
+
+sum(2, 3) <span class="comment">5</span>
+
+                            </code></pre>
+                        </li>
+                        <li>Функции могут иметь собственные свойства и методы <span class="comment">об этом позже</span></li>
+                    </ul>
+                </details>
+            </article>
+            <article>
+                <h4>Стек вызовов</h4>
+                <p>Функция при вызове помещается в стек. Затем результат вычисления возвращается в стек в то самое место очереди, откуда призошел вызов.</p>
+                <pre><code>
+function baz() {
+    console.log('baz')
+}    
+
+function bar() {
+    console.log('bar')
+}      
+    
+function foo () {
+
+   console.log('foo')
+   bar()
+   baz()
+}
+
+
+foo()                    
+                </code></pre>
+                <div>
+                    <img class="zoom" src="./img/stack.jpg" alt="stack" style="width: 100%; height: auto;">
+                </div>
+            </article>
+        </section>
+    </div>
+
+    <script src="./js/app.js"></script>
+</body>
+
+</html>
